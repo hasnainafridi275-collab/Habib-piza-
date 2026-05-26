@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habib Piza - Premium Fast Food</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #e63946;
+            --deep-red: #c1121f;
+            --bright-yellow: #ffd60a;
+            --gold: #ffb703;
+            --black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --white: #ffffff;
+            --cream: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark-gray);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 5px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 5%;
+            box-shadow: 0 5px 30px rgba(230, 57, 70, 0.2);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--bright-yellow);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 0 0 20px rgba(255, 214, 10, 0.5);
+        }
+
+        .logo span {
+            color: var(--primary-red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--bright-yellow);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover {
+            color: var(--bright-yellow);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+            color: var(--white);
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .nav-cta:hover {
+            background: transparent;
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(230, 57, 70, 0.6);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(230, 57, 70, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 214, 10, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(193, 18, 31, 0.1) 0%, transparent 70%);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .float-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .float-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .float-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .float-icon:nth-child(3) { top: 60%; left: 5%; animation-delay: 4s; }
+        .float-icon:nth-child(4) { top: 70%; right: 10%; animation-delay: 6s; }
+        .float-icon:nth-child(5) { top: 40%; left: 80%; animation-delay: 8s; }
+        .float-icon:nth-child(6) { top: 80%; left: 40%; animation-delay: 10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(10deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(30px) rotate(-10deg); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 214, 10, 0.15);
+            border: 1px solid var(--bright-yellow);
+            color: var(--bright-yellow);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 214, 10, 0.3); }
+            to { box-shadow: 0 0 25px rgba(255, 214, 10, 0.6); }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--bright-yellow) 50%, var(--primary-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleReveal 1.5s ease-out;
+        }
+
+        @keyframes titleReveal {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-slogan {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1.5s ease-out 0.6s both;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2px solid var(--bright-yellow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bright-yellow);
+            color: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 214, 10, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 5%;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--bright-yellow);
+        }
+
+        .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-line {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), var(--bright-yellow));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            background: linear-gradient(180deg, var(--black) 0%, var(--dark-gray) 100%);
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .menu-tab {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .menu-tab:hover, .menu-tab.active {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.1), rgba(255, 214, 10, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(230, 57, 70, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(230, 57, 70, 0.2);
+        }
+
+        .menu-card:hover::before {
+            opacity: 1;
+        }
+
+        .menu-card-img {
+            height: 220px;
+            background: linear-gradient(135deg, var(--dark-gray), var(--black));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-card:hover .menu-card-img img {
+            transform: scale(1.1);
+        }
+
+        .menu-card-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(10,10,10,0.8), transparent);
+            pointer-events: none;
+        }
+
+        .menu-card-content {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .menu-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--bright-yellow);
+        }
+
+        .add-btn {
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .add-btn:hover {
+            background: var(--bright-yellow);
+            color: var(--black);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 214, 10, 0.5);
+        }
+
+        /* Special Offers */
+        .offers-section {
+            background: var(--dark-gray);
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .offer-card {
+            background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .offer-card:nth-child(2) {
+            background: linear-gradient(135deg, var(--bright-yellow), var(--gold));
+            color: var(--black);
+        }
+
+        .offer-card:nth-child(2) h3,
+        .offer-card:nth-child(2) .offer-discount,
+        .offer-card:nth-child(2) p {
+            color: var(--black);
+        }
+
+        .offer-card:nth-child(3) {
+            background: linear-gradient(135deg, #2a2a2a, var(--dark-gray));
+        }
+
+        .offer-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--bright-yellow);
+            color: var(--black);
+            padding: 0.5rem 3rem;
+            transform: rotate(45deg);
+            font-weight: 800;
+            font-size: 0.85rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .offer-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .offer-discount {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--bright-yellow);
+            margin: 1rem 0;
+            text-shadow: 0 0 20px rgba(255, 214, 10, 0.3);
+        }
+
+        .offer-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .offer-btn {
+            background: var(--white);
+            color: var(--primary-red);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .offer-btn:hover {
+            background: transparent;
+            color: var(--white);
+            border-color: var(--white);
+        }
+
+        .offer-card:nth-child(2) .offer-btn {
+            color: var(--gold);
+        }
+
+        .offer-card:nth-child(2) .offer-btn:hover {
+            color: var(--black);
+            border-color: var(--black);
+        }
+
+        /* About Section */
+        .about-section {
+            background: var(--black);
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .about-visual-main {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(230, 57, 70, 0.3);
+        }
+
+        .about-visual-main::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.03) 10px,
+                rgba(255,255,255,0.03) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            from { transform: translateX(-50px); }
+            to { transform: translateX(0); }
+        }
+
+        .about-visual-float {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: var(--bright-yellow);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 10px 30px rgba(255, 214, 10, 0.4);
+            animation: floatAbout 6s ease-in-out infinite;
+        }
+
+        .about-visual-float:nth-child(2) {
+            top: -30px;
+            right: -20px;
+            animation-delay: 1s;
+        }
+
+        .about-visual-float:nth-child(3) {
+            bottom: -20px;
+            left: -30px;
+            background: var(--white);
+            animation-delay: 2s;
+        }
+
+        @keyframes floatAbout {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--bright-yellow);
+        }
+
+        .about-content p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(230, 57, 70, 0.1);
+            border-color: rgba(230, 57, 70, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-red);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            background: linear-gradient(180deg, var(--dark-gray), var(--black));
+            overflow: hidden;
+        }
+
+        .testimonials-slider {
+            display: flex;
+            gap: 2rem;
+            animation: scroll 30s linear infinite;
+            width: max-content;
+        }
+
+        .testimonials-slider:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            min-width: 350px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(230, 57, 70, 0.3);
+            transform: scale(1.02);
+        }
+
+        .testimonial-stars {
+            color: var(--bright-yellow);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-red), var(--bright-yellow));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .author-info h4 {
+            color: var(--white);
+            font-size: 1rem;
+        }
+
+        .author-info span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--black);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--bright-yellow);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(230, 57, 70, 0.1);
+            border-color: rgba(230, 57, 70, 0.3);
+            transform: translateX(10px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .contact-details h3 {
+            color: var(--white);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-details p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 15px rgba(230, 57, 70, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-gray);
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+            display: inline-flex;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        .footer-column h3 {
+            color: var(--bright-yellow);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--bright-yellow);
+            transform: translateX(5px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .newsletter-form button {
+            padding: 0.8rem 1.2rem;
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--bright-yellow);
+            color: var(--black);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-top: 1px solid rgba(230, 57, 70, 0.3);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-slogan {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                min-width: 300px;
+            }
+        }
+
+        /* Order Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--dark-gray);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: modalIn 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal h2 {
+            color: var(--bright-yellow);
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-item-info h4 {
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-info span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .cart-item-price {
+            color: var(--bright-yellow);
+            font-weight: 700;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 2rem 0;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .checkout-btn:hover {
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--bright-yellow);
+            color: var(--black);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .cart-icon-wrapper {
+            position: relative;
+            display: inline-flex;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">
+            <i class="fas fa-fire"></i>
+            Habib <span>Piza</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#offers">Offers</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#" class="nav-cta cart-icon-wrapper" onclick="openCart(event)">
+            <i class="fas fa-shopping-bag"></i> Order Now
+            <span class="cart-count" id="cartCount" style="display:none">0</span>
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="floating-icons">
+            <div class="float-icon">🍕</div>
+            <div class="float-icon">🍔</div>
+            <div class="float-icon">🍟</div>
+            <div class="float-icon">🥤</div>
+            <div class="float-icon">🌭</div>
+            <div class="float-icon">🍗</div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i> Premium Fast Food Experience
+            </div>
+            <h1>Habib Piza</h1>
+            <p class="hero-slogan">Where Every Bite is a Celebration of Flavor</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn-primary">
+                    <i class="fas fa-shopping-bag"></i> Order Now
+                </a>
+                <a href="#menu" class="btn-secondary">
+                    <i class="fas fa-utensils"></i> View Menu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="section-header">
+            <h2>Our Menu</h2>
+            <div class="section-line"></div>
+            <p>Discover our mouth-watering selection of premium fast food</p>
+        </div>
+
+        <div class="menu-tabs">
+            <button class="menu-tab active" data-category="all">All Items</button>
+            <button class="menu-tab" data-category="pizza">🍕 Pizza</button>
+            <button class="menu-tab" data-category="burger">🍔 Burgers</button>
+            <button class="menu-tab" data-category="fries">🍟 Fries</button>
+            <button class="menu-tab" data-category="drinks">🥤 Drinks</button>
+            <button class="menu-tab" data-category="combo">🎁 Combos</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+            <!-- Pizza Items -->
+            <div class="menu-card" data-category="pizza">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/ac18003eea4e1b67eefb13fa9e0247794bc316fa.png" alt="Classic Pepperoni Pizza">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Classic Pepperoni</h3>
+                    <p>Double pepperoni, mozzarella, signature tomato sauce</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨3,610</span>
+                        <button class="add-btn" onclick="addToCart('Classic Pepperoni', 12.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="pizza">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/media.istockphoto.com/de00ee626d43b60f7a359789d986c5364e5a7adf.jpg" alt="Supreme Deluxe Pizza">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Supreme Deluxe</h3>
+                    <p>Pepperoni, sausage, peppers, onions, mushrooms, olives</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨4,445</span>
+                        <button class="add-btn" onclick="addToCart('Supreme Deluxe', 15.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="pizza">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/media.istockphoto.com/8225dfd3957e07b0a8d2ce9ca8ecce7d253f9b3c.jpg" alt="BBQ Chicken Pizza">
+                </div>
+                <div class="menu-card-content">
+                    <h3>BBQ Chicken</h3>
+                    <p>Grilled chicken, BBQ sauce, red onions, cilantro</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨4,167</span>
+                        <button class="add-btn" onclick="addToCart('BBQ Chicken', 14.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="pizza">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/thumbs.dreamstime.com/bb40eb52ba94f6e29267d5523c83beb46558e5d6.jpg" alt="Margherita Fresh Pizza">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Margherita Fresh</h3>
+                    <p>Fresh basil, buffalo mozzarella, olive oil, sea salt</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨3,333</span>
+                        <button class="add-btn" onclick="addToCart('Margherita Fresh', 11.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Burger Items -->
+            <div class="menu-card" data-category="burger">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/52284e35457c5dd4c2811891c319fe35e0cada57.jpg" alt="Classic Cheeseburger">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Classic Cheeseburger</h3>
+                    <p>Beef patty, cheddar, lettuce, tomato, special sauce</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨2,777</span>
+                        <button class="add-btn" onclick="addToCart('Classic Cheeseburger', 9.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="burger">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/thumbs.dreamstime.com/9de305cfeaeeb76f784451836022f21a77dfe1ca.jpg" alt="Bacon Deluxe Burger">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Bacon Deluxe</h3>
+                    <p>Double beef, crispy bacon, Swiss cheese, caramelized onions</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨3,889</span>
+                        <button class="add-btn" onclick="addToCart('Bacon Deluxe', 13.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="burger">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/img.freepik.com/3aa46ba33d594c15defe92834b37a32939919459.jpg" alt="Spicy Habib Special Burger">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Spicy Habib Special</h3>
+                    <p>Spicy chicken, jalapeños, pepper jack, habanero sauce</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨3,333</span>
+                        <button class="add-btn" onclick="addToCart('Spicy Habib Special', 11.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="burger">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/www.allrecipes.com/e6be5094d7694a9803022660b1f8a0cdc4856a11.jpg" alt="Mushroom Swiss Burger">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Mushroom Swiss</h3>
+                    <p>Sautéed mushrooms, Swiss cheese, truffle aioli, arugula</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨3,610</span>
+                        <button class="add-btn" onclick="addToCart('Mushroom Swiss', 12.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fries Items -->
+            
+            <div class="menu-card" data-category="sides">
+    <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=500&auto=format&fit=crop" alt="Classic Fries">
+    </div>
+    <div class="menu-card-content">
+        <h3>Classic Fries</h3>
+        <p>Crispy, golden French fries perfectly seasoned with a sprinkle of salt.</p>
+        <div class="menu-card-footer">
+            <span class="price">Rs199</span>
+            <button class="add-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+            <!-- loded chees fries -->
+            <div class="menu-card" data-category="fries">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/6290ce9648c272d9e7b10fb690af7aabdfbd118a.jpeg" alt="Loaded Cheese Fries">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Loaded Cheese Fries</h3>
+                    <p>Fries topped with cheese sauce, bacon bits, green onions</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨2,222</span>
+                        <button class="add-btn" onclick="addToCart('Loaded Cheese Fries', 7.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="fries">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/cdn.idahopotato.com/77b79188991fd97e9236ba665caaecae90ddcba7.jpg" alt="Truffle Parmesan Fries">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Truffle Parmesan</h3>
+                    <p>Fries with truffle oil, parmesan, fresh herbs</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨2,500</span>
+                        <button class="add-btn" onclick="addToCart('Truffle Parmesan', 8.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drinks Items -->
+            <div class="menu-card" data-category="drinks">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/img.freepik.com/45c51c91ea81a774c190b19e3f2437389b7b2bac.jpg" alt="Habib Special Shake">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Habib Special Shake</h3>
+                    <p>Vanilla ice cream, caramel, whipped cream, cherry</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨1,667</span>
+                        <button class="add-btn" onclick="addToCart('Habib Special Shake', 5.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="drinks">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/www.shutterstock.com/9ba2c7be3c98bd48cf411bec26b8089366a23bd7.jpg" alt="Craft Soda">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Craft Soda Selection</h3>
+                    <p>Assorted premium sodas and soft drinks</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨1,111</span>
+                        <button class="add-btn" onclick="addToCart('Craft Soda', 3.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <<!-- fresh lemoneda -->
+<div class="menu-card" data-category="drinks">
+    <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=500&auto=format&fit=crop" alt="Fresh Lemonade">
+    </div>
+    <div class="menu-card-content">
+        <h3>Fresh Lemonade</h3>
+        <p>Freshly squeezed lemons with a sweet, tangy kick and a hint of mint.</p>
+        <div class="menu-card-footer">
+            <span class="price">Rs149</span>
+            <button class="add-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+            <!-- Pepsi -->
+            <div class="menu-card" data-category="drinks">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/thumbs.dreamstime.com/1768ab114beafac5cd77761719fb4bf5f7acfe3b.jpg" alt="Pepsi">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Pepsi</h3>
+                    <p>Ice-cold Pepsi, the perfect refreshment with your meal</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨139</span>
+                        <button class="add-btn" onclick="addToCart('Pepsi', 0.50, 'https://kimi-web-img.moonshot.cn/img/thumbs.dreamstime.com/1768ab114beafac5cd77761719fb4bf5f7acfe3b.jpg')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card" data-category="drinks">
+    <div class="menu-card-img">
+        <img src="dew.jpg" alt="Mountain Dew">
+    </div>
+    <div class="menu-card-content">
+        <h3>Mountain Dew</h3>
+        <p>Mountain Dew, bold citrus flavor that energizes</p>
+        <div class="menu-card-footer">
+            <span class="price">₨109</span>
+            <button class="add-btn" onclick="addToCart('Mountain Dew', 0.50, 'dew.jpg')">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+             <!-- coca kola -->
+            <div class="menu-card" data-category="drinks">
+    <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop" alt="coca kola Can">
+    </div>
+    <div class="menu-card-content">
+        <h3>coca kola</h3>
+        <p>Refreshing lemon & lime taste.</p>
+        <div class="menu-card-footer">
+            <span class="price">Rs139</span>
+            <button class="add-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Combo Items -->
+            <div class="menu-card" data-category="combo">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/86636628d33f5b91b36b8f2e181df3534665d3ba.jpg" alt="Habib Feast Combo">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Habib Feast Combo</h3>
+                    <p>2 pizzas, 4 drinks, 2 sides - feeds 4 people</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨11,112</span>
+                        <button class="add-btn" onclick="addToCart('Habib Feast Combo', 39.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="combo">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/ec49c62a8a96cc0a327ff6bdb1e68e52b76eecf4.jpg" alt="Family Pack">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Family Pack</h3>
+                    <p>4 burgers, 4 fries, 4 drinks - perfect for family</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨9,723</span>
+                        <button class="add-btn" onclick="addToCart('Family Pack', 34.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card" data-category="combo">
+                <div class="menu-card-img">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/ec49c62a8a96cc0a327ff6bdb1e68e52b76eecf4.jpg" alt="Date Night Special">
+                </div>
+                <div class="menu-card-content">
+                    <h3>Date Night Special</h3>
+                    <p>2 burgers, 1 large pizza, 2 shakes, 1 dessert</p>
+                    <div class="menu-card-footer">
+                        <span class="price">₨8,334</span>
+                        <button class="add-btn" onclick="addToCart('Date Night Special', 29.99)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="offers-section" id="offers">
+        <div class="section-header">
+            <h2>Special Offers</h2>
+            <div class="section-line"></div>
+            <p>Exclusive deals you don't want to miss</p>
+        </div>
+
+        <div class="offers-grid">
+            <div class="offer-card">
+                <div class="offer-badge">HOT</div>
+                <h3>Weekend Special</h3>
+                <div class="offer-discount">25% OFF</div>
+                <p>Get 25% off on all pizza orders every Friday to Sunday. Use code WEEKEND25</p>
+                <a href="#menu" class="offer-btn">Claim Offer</a>
+            </div>
+
+            
+
+            <div class="offer-card">
+                <div class="offer-badge">SAVE</div>
+                <h3>Combo Deal</h3>
+                <div class="offer-discount">30% OFF</div>
+                <p>Buy any 2 combos and get 30% off your total order. Limited time only!</p>
+                <a href="#menu" class="offer-btn">Get Deal</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-visual">
+                <div class="about-visual-main">
+                    🍕
+                </div>
+                <div class="about-visual-float">🍔</div>
+                <div class="about-visual-float">🍟</div>
+            </div>
+            <div class="about-content">
+                <h2>Our Story</h2>
+                <p>Founded in 2015, Habib Piza started with a simple mission: to bring premium fast food to every neighborhood. What began as a small family kitchen has grown into a beloved brand known for quality ingredients, bold flavors, and unforgettable dining experiences.</p>
+                <p>We believe that fast food doesn't have to mean compromising on quality. Every pizza is hand-tossed, every burger is crafted with care, and every fry is cooked to golden perfection. Our secret? A blend of traditional recipes with modern innovation.</p>
+                <p>From our signature Habib Special sauce to our freshly baked dough, we pour passion into every dish. Join us and taste the difference that dedication makes.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Happy Customers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Menu Items</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15</span>
+                        <span class="stat-label">Locations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="section-header">
+            <h2>What Our Customers Say</h2>
+            <div class="section-line"></div>
+            <p>Real reviews from real food lovers</p>
+        </div>
+
+        <div class="testimonials-slider">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"The best pizza I've ever had! The crust is perfectly crispy and the toppings are so fresh. Habib Piza has become our family's go-to for Friday nights."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SM</div>
+                    <div class="author-info">
+                        <h4>Sarah Mitchell</h4>
+                        <span>Regular Customer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Their burgers are absolutely incredible! The Bacon Deluxe is my favorite - juicy, flavorful, and perfectly cooked every single time."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JD</div>
+                    <div class="author-info">
+                        <h4>James Davidson</h4>
+                        <span>Food Blogger</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="testimonial-text">"Fast delivery, hot food, and amazing quality. The loaded cheese fries are addictive! Highly recommend for anyone craving comfort food."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AK</div>
+                    <div class="author-info">
+                        <h4>Aisha Khan</h4>
+                        <span>Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"The family combo is such great value! Feeds everyone and everything tastes amazing. Customer service is top-notch too."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div class="author-info">
+                        <h4>Michael Roberts</h4>
+                        <span>Family of 5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Best fast food in the city, hands down. The Spicy Habib Special burger has the perfect kick. I'm a customer for life!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">LT</div>
+                    <div class="author-info">
+                        <h4>Lisa Thompson</h4>
+                        <span>Spice Lover</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duplicate for infinite scroll -->
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"The best pizza I've ever had! The crust is perfectly crispy and the toppings are so fresh. Habib Piza has become our family's go-to for Friday nights."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SM</div>
+                    <div class="author-info">
+                        <h4>Sarah Mitchell</h4>
+                        <span>Regular Customer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Their burgers are absolutely incredible! The Bacon Deluxe is my favorite - juicy, flavorful, and perfectly cooked every single time."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JD</div>
+                    <div class="author-info">
+                        <h4>James Davidson</h4>
+                        <span>Food Blogger</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="testimonial-text">"Fast delivery, hot food, and amazing quality. The loaded cheese fries are addictive! Highly recommend for anyone craving comfort food."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AK</div>
+                    <div class="author-info">
+                        <h4>Aisha Khan</h4>
+                        <span>Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"The family combo is such great value! Feeds everyone and everything tastes amazing. Customer service is top-notch too."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div class="author-info">
+                        <h4>Michael Roberts</h4>
+                        <span>Family of 5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Best fast food in the city, hands down. The Spicy Habib Special burger has the perfect kick. I'm a customer for life!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">LT</div>
+                    <div class="author-info">
+                        <h4>Lisa Thompson</h4>
+                        <span>Spice Lover</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-header">
+            <h2>Get In Touch</h2>
+            <div class="section-line"></div>
+            <p>We'd love to hear from you</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Phone</h3>
+                        <p>+1 (555) 123-4567<br>+1 (555) 987-6543</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Location</h3>
+                        <p>123 Flavor Street, Foodie District<br>New York, NY 10001</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Opening Hours</h3>
+                        <p>Mon - Thu: 10:00 AM - 11:00 PM<br>Fri - Sun: 10:00 AM - 12:00 AM</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>hello@habibpiza.com<br>orders@habibpiza.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" placeholder="How can we help?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Tell us what's on your mind..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <i class="fas fa-fire"></i>
+                    Habib <span>Piza</span>
+                </a>
+                <p>Premium fast food crafted with passion. Every bite tells a story of quality, flavor, and dedication to the art of good food.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#offers">Special Offers</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Delivery Info</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 1rem; font-size: 0.9rem;">Subscribe for exclusive deals and updates!</p>
+                <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit"><i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p> 2026 Habib Piza. All rights reserved. Crafted with <i class="fas fa-heart" style="color: var(--primary-red);"></i> and flavor.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeCart()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2><i class="fas fa-shopping-bag"></i> Your Order</h2>
+            <div id="cartItems">
+                <div class="cart-empty">
+                    <i class="fas fa-shopping-basket" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                    Your cart is empty. Add some delicious items!
+                </div>
+            </div>
+            <div class="cart-total" id="cartTotal" style="display: none;">
+                <span>Total</span>
+                <span id="totalPrice">$0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" style="display: none;" onclick="checkout()">
+                <i class="fas fa-credit-card"></i> Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" style="
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, var(--primary-red), var(--deep-red));
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 3000;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    ">
+        <i class="fas fa-check-circle"></i> <span id="toastMessage">Item added to cart!</span>
+    </div>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price: price * 278, quantity: 1 });
+            }
+            updateCartUI();
+            showToast(`${name} added to cart!`);
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const totalPrice = document.getElementById('totalPrice');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            if (totalItems > 0) {
+                cartCount.style.display = 'flex';
+                cartCount.textContent = totalItems;
+            } else {
+                cartCount.style.display = 'none';
+            }
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-basket" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                        Your cart is empty. Add some delicious items!
+                    </div>
+                `;
+                cartTotal.style.display = 'none';
+                checkoutBtn.style.display = 'none';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <span>Qty: ${item.quantity}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span class="cart-item-price">₨${(item.price * item.quantity).toLocaleString()}</span>
+                            <button onclick="removeFromCart('${item.name}')" style="background: none; border: none; color: var(--primary-red); cursor: pointer; font-size: 1.2rem;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalPrice.textContent = `₨${total.toLocaleString()}`;
+                cartTotal.style.display = 'flex';
+                checkoutBtn.style.display = 'block';
+            }
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        function openCart(e) {
+            if (e) e.preventDefault();
+            document.getElementById('cartModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            showToast(`Order placed! Total: ₨${total.toLocaleString()}`);
+            cart = [];
+            updateCartUI();
+            setTimeout(closeCart, 1500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+
+            setTimeout(() => {
+                toast.style.transform = 'translateY(100px)';
+                toast.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Menu filtering
+        document.querySelectorAll('.menu-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const category = tab.dataset.category;
+                const cards = document.querySelectorAll('.menu-card');
+
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Contact form
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Message sent successfully! We will get back to you soon.');
+            e.target.reset();
+        });
+
+        // Newsletter
+        function handleNewsletter(e) {
+            e.preventDefault();
+            showToast('Thanks for subscribing! Check your inbox for a welcome offer.');
+            e.target.reset();
+        }
+
+        // Close modal on outside click
+        document.getElementById('cartModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('cartModal')) {
+                closeCart();
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.menu-card, .offer-card, .contact-item, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
